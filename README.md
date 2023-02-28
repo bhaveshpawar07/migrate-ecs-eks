@@ -1,4 +1,4 @@
-# ECS EKS Migration
+# ECS to EKS Migration
 
 
 ## Pre-requisites
