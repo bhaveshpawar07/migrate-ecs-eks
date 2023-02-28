@@ -55,15 +55,15 @@ echo "oidc_id:"$oidc_id
 curl -o iam_policy.json https://raw.githubusercontent.com/kubernetes-sigs/aws-load-balancer-controller/v2.4.4/docs/install/iam_policy.json
 
 aws iam create-policy \
-    --policy-name NewAWSLBControllerIAMPolicy-$env \
+    --policy-name $applicationName-AWSLBControllerIAMPolicy-$env \
     --policy-document file://iam_policy.json | grep "resource"
 
 eksctl create iamserviceaccount \
   --cluster=$applicationName-$env \
   --namespace=kube-system \
   --name=aws-load-balancer-controller-$env \
-  --role-name "NewAmazonEKSLBControllerRole-$env" \
-  --attach-policy-arn=arn:aws:iam::$awsAccountId:policy/NewAWSLBControllerIAMPolicy-$env \
+  --role-name "$applicationName-AmazonEKSLBControllerRole-$env" \
+  --attach-policy-arn=arn:aws:iam::$awsAccountId:policy/$applicationName-AWSLBControllerIAMPolicy-$env \
   --approve --override-existing-serviceaccounts
 
 
