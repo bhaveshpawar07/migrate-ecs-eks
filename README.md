@@ -23,7 +23,7 @@ Use the command below to setup EKS from your existing ECS , you will need to upd
 ## Multienv code , copy this and change the env name
 
 For example below code creates a qa environment
-Replace qa to your env and paste the code in create-helm-application.sh
+Replace qa to your env and paste the code in ```create-helm-application.sh```
 ```
 cp helm/$applicationName/values.$env.yaml helm/$applicationName/values.qa.yaml 
 
