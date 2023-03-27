@@ -77,51 +77,13 @@ yq e '.podAnnotations["prometheus.io/port"] = "9000"'  -i helm/$applicationName/
 #this indicates alb to listen to port 80 for incoming traffic
 yq e '.ingress.annotations["alb.ingress.kubernetes.io/listen-ports"] = "[{\"HTTP\":80}]"'  -i helm/$applicationName/values.$env.yaml
 
-
-
-cp helm/$applicationName/values.$env.yaml helm/$applicationName/values.qa.yaml 
-cp helm/$applicationName/values.$env.yaml helm/$applicationName/values.local.yaml 
-
-#name change -> qa
-yq e '.fullnameOverride = strenv(applicationName) + "-qa"'  -i helm/$applicationName/values.qa.yaml
-yq e '.nameOverride = strenv(applicationName) + "-qa"'  -i helm/$applicationName/values.qa.yaml
-
-#host -> qa
-yq e '.ingress.hosts[0].paths[0].backend.service.name = env(applicationName) + "-qa"'  -i helm/$applicationName/values.qa.yaml
-
-#defaultBackend -> qa
-yq e '.ingress.defaultBackendServiceName = env(applicationName) + "-qa"'  -i helm/$applicationName/values.qa.yaml
-
-#name change -> local
-yq e '.fullnameOverride = strenv(applicationName) + "-local"'  -i helm/$applicationName/values.local.yaml
-yq e '.nameOverride = strenv(applicationName) + "-local"'  -i helm/$applicationName/values.local.yaml
-
-#host -> local
-yq e '.ingress.hosts[0].paths[0].backend.service.name = env(applicationName) + "-local"'  -i helm/$applicationName/values.local.yaml
-
-#defaultBackend -> local
-yq e '.ingress.defaultBackendServiceName = env(applicationName) + "-local"'  -i helm/$applicationName/values.local.yaml
-#defaultBackend -> local
-yq e '.ingress.annotations = {}'  -i helm/$applicationName/values.local.yaml
-
-
-#pullPolicy will be IfNotPresent to fulfil local builds
-yq e '.image.pullPolicy = "IfNotPresent"'  -i helm/$applicationName/values.local.yaml
-
-
 echo "
 env:
   configmap:
     data:
       ENVIRONMENT_NAME: develop" >> helm/$applicationName/values.$env.yaml
 
-echo "
-env:
-  configmap:
-    data:
-      ENVIRONMENT_NAME: qa" >> helm/$applicationName/values.qa.yaml
 
-
-#deployment
+#to create multiple environments , simply paste mutli env code from readme.md file here
 
 
