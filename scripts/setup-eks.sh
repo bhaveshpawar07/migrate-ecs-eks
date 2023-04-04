@@ -8,16 +8,6 @@ do
 
    export "$KEY"="$VALUE"
 done
-for ARGUMENT in "$@"
-do
-   K=$(echo $ARGUMENT | cut -f1 -d=)
-   KEY=${K:2}
-   KEY_LENGTH=${#KEY}
-   VALUE="${ARGUMENT:$KEY_LENGTH+3}"
-
-   export "$KEY"="$VALUE"
-done
-
 if [ -z "$region" ]
 then
     echo "region cannot be empty"
