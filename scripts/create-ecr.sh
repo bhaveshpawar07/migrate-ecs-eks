@@ -1,13 +1,4 @@
 #!/bin/bash
-for ARGUMENT in "$@"
-do
-   K=$(echo $ARGUMENT | cut -f1 -d=)
-   KEY=${K:2}
-   KEY_LENGTH=${#KEY}
-   VALUE="${ARGUMENT:$KEY_LENGTH+3}"
-
-   export "$KEY"="$VALUE"
-done
 
 if [ -z "$applicationName" ]
 then
@@ -33,7 +24,7 @@ then
     exit
 fi
 
-aws ecr get-login-password --region $region | docker login --username AWS --password-stdin 602401143452.dkr.ecr.$region.amazonaws.com
+aws ecr get-login-password --region $region | docker login --username AWS --password-stdin $awsAccountId.dkr.ecr.$region.amazonaws.com
 
 aws ecr create-repository --repository-name=$applicationName-$env | grep "repository"
 
