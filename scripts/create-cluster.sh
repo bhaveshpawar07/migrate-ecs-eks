@@ -37,9 +37,9 @@ then
     echo "port subnet cannot be empty"
     exit
 fi
-if [ -z "$imageRepo" ]
+if [ -z "$imageLocation" ]
 then
-    echo "imageRepo subnet cannot be empty"
+    echo "imageLocation cannot be empty"
     exit
 fi
 
@@ -57,7 +57,7 @@ kubectl config use-context arn:aws:eks:$region:$awsAccountId:cluster/$applicatio
 aws eks update-kubeconfig --name $applicationName-$env
 
 echo "Creating helm application"
-make helm-app applicationName=$applicationName env=$env port=$port imageRepo=$imageRepo
+make helm-app applicationName=$applicationName env=$env port=$port imageLocation=$imageLocation
 
 echo "Installing helm application"
 make helm-upgrade applicationName=$applicationName env=$env 

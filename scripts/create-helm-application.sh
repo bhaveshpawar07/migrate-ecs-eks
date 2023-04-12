@@ -15,9 +15,9 @@ then
     echo "port cannot be empty"
     exit
 fi
-if [ -z "$imageRepo" ]
+if [ -z "$imageLocation" ]
 then
-    echo "imageRepo cannot be empty"
+    echo "imageLocation cannot be empty"
     exit
 fi
 
@@ -34,7 +34,7 @@ rm helm/$applicationName/templates/deployment-temp.yaml
 
 #we will set the service as nodeport and port to 9000
 #here you can set the image repository now or later once the file is created
-yq e '.image.repository = env(imageRepo)'  -i helm/$applicationName/values.$env.yaml
+yq e '.image.repository = env(imageLocation)'  -i helm/$applicationName/values.$env.yaml
 yq e '.image.pullPolicy = "Always"'  -i helm/$applicationName/values.$env.yaml
 yq e '.image.tag = "latest"'  -i helm/$applicationName/values.$env.yaml
 
