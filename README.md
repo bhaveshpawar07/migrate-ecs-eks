@@ -12,7 +12,7 @@
 
 Use this repo to migrate from your existing ECS to EKS.
 
-For a detailed tutorial on how to use this , please go through [this article.]()
+For a detailed tutorial on how to use this , please go through [this article.](https://www.wednesday.is/writing-articles/migrating-ecs-eks-step-by-step-guide)
 
 ## Examples
 
